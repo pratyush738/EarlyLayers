@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Position from '../../components/Position.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('research', e => e.data.status === 'published');
+  return entries.map(entry => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const num = String(d.record).padStart(3, '0');
+---
+<Base title={`${d.title} — EarlyLayers`} description={d.summary}>
+  <article>
+    <section class="article-head">
+      <div class="wrap">
+        <a class="back" href="/research/">← All records</a>
+        <p class="subject">Record {num} · Subject — {d.subject}</p>
+        <h1>{d.title}</h1>
+        <div class="meta-row">
+          <span class="mono">{d.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+          {d.sources ? <span class="mono">{d.sources} primary sources</span> : null}
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <p class="section-label">Findings</p>
+        <div class="prose"><Content /></div>
+        <div style="max-width:var(--measure); margin-top:44px;">
+          <Position position={d.position} date={d.date} />
+        </div>
+      </div>
+    </section>
+  </article>
+</Base>

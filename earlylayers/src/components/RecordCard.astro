@@ -1,0 +1,25 @@
+---
+import Position from './Position.astro';
+const { entry } = Astro.props;
+const d = entry.data;
+const num = String(d.record).padStart(3, '0');
+const isLive = d.status === 'published';
+const statusLabel = { published: 'Published', drafting: 'Drafting', research: 'In research' }[d.status];
+const dateLabel = isLive
+  ? new Date(d.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+  : (d.status === 'drafting' ? 'In progress' : 'Queued');
+---
+<article class="record">
+  <div class="record-head">
+    <span class="record-id">Record {num} · {dateLabel}{d.sources ? ` · ${d.sources} primary sources` : ''}</span>
+    <span class={`status ${d.status}`}>{statusLabel}</span>
+  </div>
+  <div class="record-body">
+    <p class="subject">Subject — {d.subject}</p>
+    <h3>
+      {isLive ? <a href={`/research/${entry.id}/`}>{d.title}</a> : d.title}
+    </h3>
+    <p class="findings">{d.summary}</p>
+    <Position position={isLive ? d.position : undefined} date={d.date} />
+  </div>
+</article>

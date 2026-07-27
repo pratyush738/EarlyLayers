@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import RecordCard from '../components/RecordCard.astro';
+
+const research = (await getCollection('research')).sort((a, b) => a.data.record - b.data.record);
+const notes = (await getCollection('notes'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+---
+<Base title="EarlyLayers — Independent research on Asian onchain capital markets">
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Independent research desk · Est. July 2026</p>
+      <h1>Asia is building the settlement layer. Most of the coverage is <em>still a press release.</em></h1>
+      <p class="hero-sub">EarlyLayers is an independent research desk covering onchain capital markets in Asia — tokenized securities, settlement infrastructure, and the institutions moving onto it. We read the primary sources: filings, disclosures, governance records, and Japanese- and Korean-language releases that Western desks skip. Every piece we publish carries a stated position, signed.</p>
+
+      <dl class="desk-strip">
+        <div><dt>Coverage</dt><dd>Japan · Korea · SEA</dd></div>
+        <div><dt>Cadence</dt><dd>Daily notes, deep research</dd></div>
+        <div><dt>Reader</dt><dd>Fund analysts, founders</dd></div>
+        <div><dt>Funding</dt><dd>No paid coverage</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="band-head"><h2>What the desk covers</h2></div>
+      <p class="band-note">Three lines of inquiry. Everything published sits inside one of them — if it doesn't, we don't cover it.</p>
+      <div class="coverage">
+        <article>
+          <p class="mono">Line 01</p>
+          <h3>Tokenized securities</h3>
+          <p>The stack that turns a regulated instrument into an onchain one — issuance, custody, transfer agency, settlement finality — and which parts of it are real today versus announced.</p>
+        </article>
+        <article>
+          <p class="mono">Line 02</p>
+          <h3>Institutional distribution</h3>
+          <p>Who actually reaches Asian retail and institutional capital. Broker networks, bank rails, and the distribution claims that get made in launch materials and rarely get checked.</p>
+        </article>
+        <article>
+          <p class="mono">Line 03</p>
+          <h3>Chain-level infrastructure</h3>
+          <p>The base layers positioning for Asian capital markets — their design decisions, their backers, and whether the technical architecture matches the market they say they're built for.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="research">
+    <div class="wrap">
+      <div class="band-head"><h2>Research</h2><span class="mono">Findings, then position</span></div>
+      <p class="band-note">Each record separates what we found from what we think. The findings are sourced and checkable. The position is one person's judgment, signed, and open to being wrong in public.</p>
+      {research.map(entry => <RecordCard entry={entry} />)}
+    </div>
+  </section>
+
+  <section class="band" id="notes">
+    <div class="wrap">
+      <div class="band-head"><h2>Daily notes</h2><span class="mono">Published every day</span></div>
+      <p class="band-note">One observation a day from the reading. Not news — the thing in the document that hasn't been picked up yet.</p>
+      <div class="notes">
+        {notes.map(note => (
+          <div class="note">
+            <time datetime={note.data.date.toISOString().slice(0,10)}>
+              {note.data.date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+            </time>
+            <div class="note-body">
+              <p><a href={`/notes/${note.id}/`}>{note.data.title ?? 'Note'}</a></p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p style="margin-top:26px;"><a class="mono" href="/notes/">All notes →</a></p>
+    </div>
+  </section>
+
+  <section class="band" id="standards">
+    <div class="wrap">
+      <div class="band-head"><h2>Standards</h2></div>
+      <div class="standards">
+        <div>
+          <p>EarlyLayers is independent. It takes no payment from the projects it covers, in any form, at any time — before, during, or after publication.</p>
+          <p>The desk writes in the first person plural for findings and the first person singular for positions. That split is deliberate: findings should hold regardless of who assembled them, positions belong to a person who can be held to them.</p>
+        </div>
+        <ul>
+          <li>No paid coverage, sponsored research, or token compensation</li>
+          <li>Primary sources cited and linked in every record</li>
+          <li>Positions signed by name and dated</li>
+          <li>Corrections published in place, with the original text preserved</li>
+          <li>Holdings disclosed where a covered asset is held</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="subscribe">
+    <div class="wrap">
+      <div class="subscribe">
+        <div>
+          <h2>Read the desk</h2>
+          <p>Daily notes and full research records, sent as they publish. No promotional mail, ever.</p>
+        </div>
+        <div class="cta-row">
+          <a class="btn solid" href="#">Subscribe</a>
+          <a class="btn" href="#">Follow @EarlyLayers</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Base>

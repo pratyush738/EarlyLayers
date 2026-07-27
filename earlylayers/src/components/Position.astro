@@ -1,0 +1,21 @@
+---
+// The signature element: the analyst's own thesis, kept visually and
+// structurally separate from the desk's findings.
+const { position, signature = 'Pratyush, EarlyLayers', date } = Astro.props;
+const paragraphs = position ? position.trim().split(/\n\s*\n/) : [];
+const stamp = date
+  ? new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  : null;
+---
+{position ? (
+  <div class="position">
+    <p class="position-label">Position</p>
+    {paragraphs.map(p => <p>{p}</p>)}
+    <p class="sig">— {signature}{stamp ? ` · ${stamp}` : ''}</p>
+  </div>
+) : (
+  <div class="position pending">
+    <p class="position-label">Position — pending</p>
+    <p>Held until the findings are complete. The desk does not publish a view ahead of the work that justifies it.</p>
+  </div>
+)}

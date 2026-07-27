@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import RecordCard from '../../components/RecordCard.astro';
+const research = (await getCollection('research')).sort((a, b) => a.data.record - b.data.record);
+---
+<Base title="Research — EarlyLayers">
+  <section class="article-head">
+    <div class="wrap">
+      <p class="eyebrow">Research records</p>
+      <h1>Findings, then position.</h1>
+      <p class="hero-sub">Every record separates what the desk found from what one person concludes from it. Records in progress show their status openly rather than being hidden until publication.</p>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      {research.map(entry => <RecordCard entry={entry} />)}
+    </div>
+  </section>
+</Base>

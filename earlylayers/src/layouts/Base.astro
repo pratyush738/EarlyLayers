@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+const { title, description = "An independent research desk covering onchain capital markets in Asia. Primary-source research for fund analysts and founders." } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/research', label: 'Research' },
+  { href: '/notes', label: 'Daily notes' },
+  { href: '/#standards', label: 'Standards' },
+  { href: '/#subscribe', label: 'Subscribe' },
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap masthead-in">
+      <a class="wordmark" href="/">Early<span>Layers</span></a>
+      <nav aria-label="Primary">
+        {nav.map(item => (
+          <a href={item.href} aria-current={path.startsWith(item.href) && item.href !== '/' ? 'page' : undefined}>{item.label}</a>
+        ))}
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer>
+    <div class="wrap foot-in">
+      <p class="mono">EarlyLayers — Independent research, Asian onchain capital markets</p>
+      <p class="mono">Research is not investment advice</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('notes');
+  return entries.map(entry => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<Base title={`${entry.data.title ?? 'Note'} — EarlyLayers`}>
+  <section class="article-head">
+    <div class="wrap">
+      <a class="back" href="/notes/">← All notes</a>
+      <p class="mono">{entry.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+      {entry.data.title ? <h1>{entry.data.title}</h1> : null}
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap"><div class="prose"><Content /></div></div>
+  </section>
+</Base>

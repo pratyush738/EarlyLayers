@@ -1,0 +1,29 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+const notes = (await getCollection('notes')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const rendered = await Promise.all(notes.map(async n => ({ note: n, Content: (await render(n)).Content })));
+---
+<Base title="Daily notes — EarlyLayers">
+  <section class="article-head">
+    <div class="wrap">
+      <p class="eyebrow">Daily notes</p>
+      <h1>The reading log, made public.</h1>
+      <p class="hero-sub">One observation a day. Not news — the thing in the document that hasn't been picked up yet. These accumulate into the research records.</p>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <div class="notes">
+        {rendered.map(({ note, Content }) => (
+          <div class="note">
+            <time datetime={note.data.date.toISOString().slice(0,10)}>
+              {note.data.date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+            </time>
+            <div class="note-body"><Content /></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
