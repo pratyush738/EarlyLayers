@@ -2,9 +2,11 @@
 import '../styles/global.css';
 const { title, description = "An independent research desk covering onchain capital markets in Asia. Primary-source research for fund analysts and founders." } = Astro.props;
 const path = Astro.url.pathname;
+const ogImage = new URL('/og.png', Astro.site);
 const nav = [
   { href: '/research', label: 'Research' },
   { href: '/notes', label: 'Daily notes' },
+  { href: '/about', label: 'About' },
   { href: '/#standards', label: 'Standards' },
   { href: '/#subscribe', label: 'Subscribe' },
 ];
@@ -19,8 +21,12 @@ const nav = [
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content={ogImage} />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content={ogImage} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="EarlyLayers" href="/rss.xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -44,6 +50,7 @@ const nav = [
   <footer>
     <div class="wrap foot-in">
       <p class="mono">EarlyLayers — Independent research, Asian onchain capital markets</p>
+      <p class="mono"><a href="/disclosure/">Disclosure</a> · <a href="/rss.xml">RSS</a> · <a href="mailto:research@earlylayers.xyz">research@earlylayers.xyz</a></p>
       <p class="mono">Research is not investment advice</p>
     </div>
   </footer>
