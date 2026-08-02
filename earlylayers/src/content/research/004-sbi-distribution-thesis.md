@@ -34,6 +34,8 @@ That distinction is important. Distribution agreements can be replaced. Equity o
 
 For readers following Asian onchain capital markets, the investment should therefore be read not as a standalone financing event, but as another signal that SBI intends to participate across infrastructure, settlement and distribution simultaneously.
 
+**Update, 2 August 2026:** SBI Group holds 59% of the voting rights in Osaka Digital Exchange, which already operates Japan's first secondary market for security tokens. That complicates the vertical-integration reading advanced here — see the note [ODX complicates my SBI thesis](/notes/2026-08-02/).
+
 ## Sources
 
 * Startale Group, Startale Group Closes $63 Million Series A with Investment from SBI Group and Sony Innovation Fund — https://startale.com/en/blog/sbi-fundraise
